@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🜃 ⟠ g͏̎͏̳͏͜͏͓͏̥͏̳͏̰͏̜͏̽h͏̮͏͆͏̤͏̳͏̿͏̰͏̿͏̿͏̊͏̿͏͈o͏̥͏͝͏̽͏̥͏̿͏̹͏̤͏͝s⃤͏̃͏̍͏͗͏̈͏̹͏̎͏̃͏͑͏̹͏̤͏̍t͏̮͏̮͏̯͏̃͏̜͏̯͏̈-͏̩͏̰͏̊͏̿͏̎͏͜h͏͝͏̽͏̊͏̿͏̹͏͑e͏̿͏̈͏̰͏̹͏̤͏̃x⃫͏͝͏̆͏̆͏͗͏̩͏̰ ⏾☥𓂀</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="bg-accent"></div>
+
+    <header class="site-header">
+      <div>
+        <h1>
+          <span class="title-spark no-stylize">⟠</span>
+          <span class="glow-word no-stylize" data-glow="g͏̎͏̳͏͜͏͓͏̥͏̳͏̰͏̜͏̽h͏̮͏͆͏̤͏̳͏̿͏̰͏̿͏̿͏̊͏̿͏͈o͏̥͏͝͏̽͏̥͏̿͏̹͏̤͏͝s⃤͏̃͏̍͏͗͏̈͏̹͏̎͏̃͏͑͏̹͏̤͏̍t͏̮͏̮͏̯͏̃͏̜͏̯͏̈-͏̩͏̰͏̊͏̿͏̎͏͜h͏͝͏̽͏̊͏̿͏̹͏͑e͏̿͏̈͏̰͏̹͏̤͏̃x⃫͏͝͏̆͏̆͏͗͏̩͏̰">g͏̎͏̳͏͜͏͓͏̥͏̳͏̰͏̜͏̽h͏̮͏͆͏̤͏̳͏̿͏̰͏̿͏̿͏̊͏̿͏͈o͏̥͏͝͏̽͏̥͏̿͏̹͏̤͏͝s⃤͏̃͏̍͏͗͏̈͏̹͏̎͏̃͏͑͏̹͏̤͏̍t͏̮͏̮͏̯͏̃͏̜͏̯͏̈-͏̩͏̰͏̊͏̿͏̎͏͜h͏͝͏̽͏̊͏̿͏̹͏͑e͏̿͏̈͏̰͏̹͏̤͏̃x⃫͏͝͏̆͏̆͏͗͏̩͏̰</span>
+          <span class="title-spark no-stylize">⏾☥𓂀</span>
+        </h1>
+      </div>
+      <div class="meta-card">
+        <div class="meta-title">mapping</div>
+        <div class="meta-line"><span>vs17</span> u+e0100</div>
+        <div class="meta-line"><span>vs144</span> u+e017f</div>
+        <div class="meta-line"><span>ascii</span> 0x00-0x7f</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="mode-switch">
+        <button class="mode-btn active" type="button" data-target="encode-panel">encode</button>
+        <button class="mode-btn" type="button" data-target="decode-panel">decode</button>
+      </section>
+
+      <section id="encode-panel" class="panel active">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">encode</p>
+            <h2>bind a payload to the tail of the carrier</h2>
+          </div>
+          <div class="note">
+            encoded output uses only vs17-vs144 appended after the final carrier
+            character. any characters, unicode glyphs, or emojis can be used in
+            the carrier text.
+          </div>
+        </div>
+        <div class="panel-grid">
+          <label class="field">
+            <span>carrier text</span>
+            <textarea id="carrier-input" rows="6" placeholder="type the visible carrier text"></textarea>
+          </label>
+          <label class="field">
+            <span>payload text (ascii only)</span>
+            <textarea id="payload-input" rows="6" placeholder="type the hidden payload"></textarea>
+          </label>
+          <label class="field full">
+            <span>encoded output</span>
+            <textarea id="encoded-output" rows="6" readonly></textarea>
+            <div class="field-actions">
+              <button id="copy-encoded" class="ghost" type="button">copy encoded</button>
+              <span id="encode-status" class="status" role="status" aria-live="polite"></span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section id="decode-panel" class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">decode</p>
+            <h2>reveal the ghostly payload</h2>
+          </div>
+          <div class="note">
+            decoding only reads trailing vs17-vs144. any other characters remain
+            in the carrier output.
+          </div>
+        </div>
+        <div class="panel-grid">
+          <label class="field full">
+            <span>encoded input</span>
+            <textarea id="decode-input" rows="6" placeholder="paste encoded text"></textarea>
+          </label>
+          <label class="field">
+            <span>decoded carrier</span>
+            <textarea id="decoded-carrier" rows="6" readonly></textarea>
+          </label>
+          <label class="field">
+            <span>decoded payload</span>
+            <textarea id="decoded-payload" rows="6" readonly></textarea>
+          </label>
+          <div class="field full">
+            <div class="field-actions">
+              <button id="copy-payload" class="ghost" type="button">copy payload</button>
+              <span id="decode-status" class="status" role="status" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"></footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
