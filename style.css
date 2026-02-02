@@ -14,6 +14,7 @@
   --font-sans: "Space Grotesk", "Inter", "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
   --font-display: "Space Grotesk", "Inter", "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
   --font-mono: "DM Mono", "SF Mono", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+  --font-zalgo: "Noto Sans", "Noto Sans Symbols 2", "Noto Sans Symbols", "Segoe UI Symbol", "Apple Symbols", "Arial Unicode MS", "DejaVu Sans", "Times New Roman", serif;
 }
 
 * {
@@ -99,6 +100,11 @@ h1 {
   letter-spacing: -0.8px;
   font-family: var(--font-display);
   color: #0b1f4d;
+}
+
+h1 .glow-word {
+  font-family: var(--font-zalgo);
+  font-variant-ligatures: none;
 }
 
 .title-spark {

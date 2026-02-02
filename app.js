@@ -143,16 +143,20 @@ const stylizeUI = () => {
 const encodePayload = (payload) => {
   const codePoints = toCodePoints(payload);
   const encoded = [];
+  const omitted = [];
+  const omittedSet = new Set();
   for (const code of codePoints) {
     if (code > ASCII_MAX) {
-      return {
-        ok: false,
-        error: `non-ascii character detected: u+${formatHex(code)}`,
-      };
+      const char = String.fromCodePoint(code);
+      if (!omittedSet.has(char)) {
+        omittedSet.add(char);
+        omitted.push(char);
+      }
+      continue;
     }
     encoded.push(String.fromCodePoint(VS_START + code));
   }
-  return { ok: true, value: encoded.join("") };
+  return { value: encoded.join(""), asciiCount: encoded.length, omitted };
 };
 
 const splitEncoded = (text) => {
@@ -186,21 +190,29 @@ const updateEncode = () => {
   }
 
   const encoded = encodePayload(payload);
-  if (!encoded.ok) {
-    encodedOutput.value = "";
-    setStatus(encodeStatus, encoded.error, "error");
+  encodedOutput.value = carrier + encoded.value;
+
+  if (encoded.omitted.length > 0) {
+    const list = encoded.omitted.join(" ");
+    const suffix =
+      encoded.asciiCount > 0
+        ? ` encoded ${encoded.asciiCount} byte(s).`
+        : " no ascii payload encoded.";
+    setStatus(
+      encodeStatus,
+      `omitted non-ascii: ${list}.${suffix}`,
+      "error"
+    );
     return;
   }
 
-  encodedOutput.value = carrier + encoded.value;
-  const payloadCount = toCodePoints(payload).length;
-  if (payloadCount === 0) {
+  if (encoded.asciiCount === 0) {
     setStatus(encodeStatus, "payload is empty. output is just the carrier.");
     return;
   }
   setStatus(
     encodeStatus,
-    `${payloadCount} byte(s) mapped to vs17-vs144 and appended.`,
+    `${encoded.asciiCount} byte(s) mapped to vs17-vs144 and appended.`,
     "good"
   );
 };
